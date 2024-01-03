@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { DeleteIcon } from "./Icon";
 import { AlertModal } from "./Modal";
-import { SnakeAnimation } from "./Animation";
+import { SnakeAnimation, HatenaAnimation } from "./Animation";
 
 const Calculator = () => {
+  // 入力値保持
   const [figure, setFigure] = useState("");
   const btnText = [
     "🐇",
-    "CE",
-    "C",
+    "YELL",
+    "AC",
     "削除",
     "1/x",
     "x^2",
@@ -32,9 +33,6 @@ const Calculator = () => {
     "=",
   ];
 
-  const [figArray, setFigArray] = useState([]);
-  const [newFig, setNewFig] = useState("");
-
   // Alert：trueで発火
   const [showAlert, setShowAlert] = useState(false);
   const handleAlertClose = () => setShowAlert(false);
@@ -42,7 +40,7 @@ const Calculator = () => {
   const [showSnake, setShowSnake] = useState(false);
   // HatenaAnimation：trueで発火
   const [showHatena, setShowHatena] = useState(false);
-  // 文字列判断Flag：true(=文字列)でdisplay削除
+  // 文字列判断Flag：trueでdisplay削除
   const [judgeFlag, setJudgeFlag] = useState(false);
   // 小数点Flag：trueで入力可能
   const [decimalFlag, setDecimalFlag] = useState(false);
@@ -68,6 +66,7 @@ const Calculator = () => {
           setFigure(figure + btnText[index]);
         }
         setDecimalFlag(true);
+        setOperatFlag(false);
         break;
       case 21: // 0
         if (judgeFlag) {
@@ -78,24 +77,22 @@ const Calculator = () => {
         }
         setJudgeFlag(true);
         setDecimalFlag(true);
+        setOperatFlag(false);
         break;
 
       case 0: // 🐇
-        setFigure("削除をスライスでかきますby彪");
+        setFigure("うさぎじゃありません");
         setShowSnake(true);
         setJudgeFlag(true);
         break;
-      case 1: // CE
+      case 1: // yell
+        setFigure("いつも頑張っていて偉いよ～😊");
         break;
-      case 2: // C
+      case 2: // AC
         setFigure("");
         break;
       case 3: // (1文字)削除
-        setFigArray(figure.split("")); // 文字列の分割
-        figArray.pop(); // 配列の最後の要素を取り除く
-        setNewFig(figArray.join("")); // 配列の連結
-        setFigure(newFig);
-        // console.log(figure);
+        setFigure((prevVal) => prevVal.slice(0, -1));
         break;
       case 4: // 1/x
         setFigure("涙腺コルクできゅっ");
@@ -105,7 +102,7 @@ const Calculator = () => {
         setFigure("これで、泣けまへーん");
         setJudgeFlag(true);
         break;
-      case 6: // root
+      case 6: // rootx
         setFigure("ここではありまへーん");
         setJudgeFlag(true);
         break;
@@ -113,35 +110,59 @@ const Calculator = () => {
       case 7: // ÷
         setJudgeFlag(false);
         setDecimalFlag(true);
-        if (operatFlag) {
-          setFigArray(figure.split(""));
-          figArray[figArray.length - 1] = "/";
-          setNewFig(figureArray.join(""));
-          setFigure(newFig);
-          setOperatFlag(false);
-        } else {
-          setFigure(figure + "+");
-          setOperatFlag(true);
-        }
+        setOperatFlag((prevOpFlg) => {
+          console.log("operateFlg:", prevOpFlg);
+          if (prevOpFlg) {
+            setFigure((prevVal) => prevVal.slice(0, -1));
+          }
+          // この段階でのprevOperatFlagが使用されているため、更新後の値ではないことに注意
+          setFigure((prevFigure) => prevFigure + "/");
+          return true; // setOperatFlagを更新
+        });
         break;
       case 11: // ×
-        setFigure(figure + "+");
         setJudgeFlag(false);
         setDecimalFlag(true);
+        setOperatFlag((prevOpFlg) => {
+          console.log("operateFlg:", prevOpFlg);
+          if (prevOpFlg) {
+            setFigure((prevVal) => prevVal.slice(0, -1));
+          }
+          // この段階でのprevOperatFlagが使用されているため、更新後の値ではないことに注意
+          setFigure((prevFigure) => prevFigure + "*");
+          return true; // setOperatFlagを更新
+        });
         break;
       case 15: // －
-        setFigure(figure + "+");
         setJudgeFlag(false);
         setDecimalFlag(true);
+        setOperatFlag((prevOpFlg) => {
+          console.log("operateFlg:", prevOpFlg);
+          if (prevOpFlg) {
+            setFigure((prevVal) => prevVal.slice(0, -1));
+          }
+          // この段階でのprevOperatFlagが使用されているため、更新後の値ではないことに注意
+          setFigure((prevFigure) => prevFigure + "-");
+          return true; // setOperatFlagを更新
+        });
         break;
       case 19: // +
-        setFigure(figure + "+");
         setJudgeFlag(false);
         setDecimalFlag(true);
+        setOperatFlag((prevOpFlg) => {
+          console.log("operateFlg:", prevOpFlg);
+          if (prevOpFlg) {
+            setFigure((prevVal) => prevVal.slice(0, -1));
+          }
+          // この段階でのprevOperatFlagが使用されているため、更新後の値ではないことに注意
+          setFigure((prevFigure) => prevFigure + "+");
+          return true; // setOperatFlagを更新
+        });
         break;
       case 20: // ？
-        setJudgeFlag(true);
+        setFigure("うわぁぁ！");
         setShowHatena(true);
+        setJudgeFlag(true);
         break;
       case 22: // .
         if (decimalFlag) {
@@ -164,7 +185,6 @@ const Calculator = () => {
       default:
         break;
     }
-    console.log(operatFlag);
   };
 
   return (
@@ -238,6 +258,10 @@ const Calculator = () => {
           })}
         </div>
         <SnakeAnimation showSnake={showSnake} setShowSnake={setShowSnake} />
+        <HatenaAnimation
+          showHatena={showHatena}
+          setShowHatena={setShowHatena}
+        />
       </div>
       <AlertModal showAlert={showAlert} onHide={handleAlertClose} />
     </>
