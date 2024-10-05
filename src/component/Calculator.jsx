@@ -8,12 +8,12 @@ const Calculator = () => {
   const [figure, setFigure] = useState("");
   const btnText = [
     "🐇",
-    "YELL",
+    "☘",
     "AC",
     "削除",
-    "1/x",
-    "x^2",
-    "root",
+    "tip1",
+    "tip2",
+    "tip3",
     "÷",
     "7",
     "8",
@@ -81,12 +81,14 @@ const Calculator = () => {
         break;
 
       case 0: // 🐇
-        setFigure("うさぎじゃありません");
+        setFigure("This is not a rabbit.");
         setShowSnake(true);
         setJudgeFlag(true);
         break;
-      case 1: // yell
-        setFigure("いつも頑張っていて偉いよ～😊");
+      case 1: // ☘
+        setFigure(
+          "My potential is limitless! Everything can change depending on my choices and actions!!"
+        );
         break;
       case 2: // AC
         setFigure("");
@@ -94,16 +96,22 @@ const Calculator = () => {
       case 3: // (1文字)削除
         setFigure((prevVal) => prevVal.slice(0, -1));
         break;
-      case 4: // 1/x
-        setFigure("涙腺コルクできゅっ");
+      case 4: // tip1
+        setFigure(
+          "自分の生まれた月に4を掛け、9を足し、25を掛けてから生まれた日を足してください。最後に225を引くと、誕生日と同じ数字が出ます。"
+        );
         setJudgeFlag(true);
         break;
-      case 5: // x^2
-        setFigure("これで、泣けまへーん");
+      case 5: // tip2
+        setFigure(
+          "「142857」を使った計算では、1から7まで掛けるとサイクルが現れます。例えば、142857×7=999999になる。この数は1/7の循環小数だからです。"
+        );
         setJudgeFlag(true);
         break;
-      case 6: // rootx
-        setFigure("ここではありまへーん");
+      case 6: // tip3
+        setFigure(
+          "好きな数字を思い浮かべ、次の手順を実行してください。➀数字に3を足す ➁2を掛ける ➂4を足す ➃2で割る ➄最初に選んだ数字を引く。結果は常に5になります。"
+        );
         setJudgeFlag(true);
         break;
 
@@ -160,7 +168,7 @@ const Calculator = () => {
         });
         break;
       case 20: // ？
-        setFigure("うわぁぁ！");
+        setFigure("This is Elizabeth.");
         setShowHatena(true);
         setJudgeFlag(true);
         break;
