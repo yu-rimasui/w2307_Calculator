@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import Snake from "../img/snake.png";
-import Hatena from "../img/zbs.jpg";
+import Hatena from "../img/zbs.png";
 
 // へびもどき
 export const SnakeAnimation = (props) => {
