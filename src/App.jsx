@@ -1,8 +1,8 @@
 import React from "react";
-import "src/css/reset.css";
+import "./css/reset.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap";
-import "src/css/style.css";
+import "./css/style.css";
 
 import Calculator from "./component/Calculator";
 
